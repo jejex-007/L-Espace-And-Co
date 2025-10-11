@@ -1,0 +1,54 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4" style="font-family: 'Playfair Display', serif;">Réservez votre espace</h1>
+    <p class="lead">Sélectionnez un créneau disponible dans le calendrier pour commencer.</p>
+</div>
+<div class="row mt-5">
+    <div class="col-lg-8"><div id='calendar'></div></div>
+    <div class="col-lg-4">
+        <h4>Votre Réservation</h4>
+        <form action="{{ url_for('reservation') }}" method="POST">
+            <div class="mb-3"><label for="userName" class="form-label">Votre Nom Complet</label><input type="text" class="form-control" id="userName" name="userName" required></div>
+            <div class="mb-3"><label for="bookingDate" class="form-label">Date</label><input type="date" class="form-control" id="bookingDate" name="bookingDate" readonly required></div>
+            <div class="row">
+                <div class="col"><label for="startTime" class="form-label">Début</label><input type="time" class="form-control" id="startTime" name="startTime" readonly required></div>
+                <div class="col"><label for="endTime" class="form-label">Fin</label><input type="time" class="form-control" id="endTime" name="endTime" readonly required></div>
+            </div>
+            <div class="mb-3 mt-3">
+                 <label for="posteId" class="form-label">Poste de coiffage</label>
+                 <select class="form-select" id="posteId" name="posteId" required>
+                    <option value="" disabled selected>Choisir...</option>
+                    <option value="1">Poste 1</option><option value="2">Poste 2</option><option value="3">Poste 3</option>
+                    <option value="4">Poste 4</option><option value="5">Poste 5</option><option value="6">Poste 6</option><option value="7">Poste 7</option>
+                 </select>
+            </div>
+            <div class="d-grid mt-4"><button type="submit" class="btn btn-primary btn-lg">Procéder au paiement & Confirmer</button></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            locale: 'fr',
+            headerToolbar: { left: 'prev,next today', center: 'title', right: 'timeGridWeek,timeGridDay' },
+            slotMinTime: "08:00:00", slotMaxTime: "20:00:00",
+            allDaySlot: false, selectable: true,
+            events: '/api/bookings',
+            select: function(info) {
+                let d = info.start;
+                document.getElementById('bookingDate').value = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+                document.getElementById('startTime').value = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+                let e = info.end;
+                document.getElementById('endTime').value = ('0' + e.getHours()).slice(-2) + ':' + ('0' + e.getMinutes()).slice(-2);
+                document.getElementById('userName').focus();
+            }
+        });
+        calendar.render();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3 text-center">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold" style="font-family: 'Playfair Display', serif;">L'Espace & Co.</h1>
+        <p class="fs-4">Là où les idées prennent vie.</p>
+        <p class="col-md-8 mx-auto">Le premier espace de coworking à Nice dédié aux coiffeurs indépendants.</p>
+        <a href="{{ url_for('reservation') }}" class="btn btn-primary btn-lg">Réserver mon poste</a>
+    </div>
+</div>
+<div class="row align-items-md-stretch">
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>Notre Concept</h2>
+            <p>Fini les contraintes. Grâce à notre technologie Coiff'Tech Connect, votre smartphone devient la clé de votre espace de travail.</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>Comment ça marche ?</h2>
+            <ol>
+                <li><strong>Réservez en ligne :</strong> Choisissez votre créneau.</li>
+                <li><strong>Accédez en autonomie :</strong> Un QR code unique vous est envoyé.</li>
+                <li><strong>Créez en toute liberté :</strong> Concentrez-vous sur votre art.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
